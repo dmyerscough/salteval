@@ -4,8 +4,8 @@
 Perform functional testing to validate configuration changes
 '''
 
+import importlib
 import argparse
-import salteval
 import yaml
 import sys
 
@@ -35,12 +35,19 @@ def main(config):
                 kwargs.update(arg)
 
             try:
-                successful = getattr(salteval, func)(**kwargs)
+                (module, method) = func.split('.')
+
+                successful = getattr(
+                    importlib.import_module('salteval.{0}'.format(module), method),
+                    method
+                )(**kwargs)
             except AttributeError:
-                successful = False
                 test_results['OTHER'].update(
                     {name: '`{0}` is not a valid test method'.format(func)}
                 )
+
+                successful = False
+                continue
 
             if successful:
                 test_results['SUCCESS'].update(

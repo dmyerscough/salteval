@@ -3,15 +3,14 @@
 salteval
 =========
 
-
-
+Perform functional testing after your configuration management system has run.
 
 
 
 File
 ====
 
-Check to see if the object is a file
+Check to see if an object is a file
 
 ```yaml
 checking_file:
@@ -19,7 +18,7 @@ checking_file:
     - name: /etc/passwd
 ```
 
-Check to see if the object is a directory
+Check to see if an object is a directory
 
 ```yaml
 testing_directory:
@@ -27,7 +26,7 @@ testing_directory:
     - name: /etc
 ```
 
-Check to see if the object is a socket
+Check to see if an object is a socket
 
 ```yaml
 testing_socket:
@@ -35,7 +34,7 @@ testing_socket:
     - name: /var/run/mysql.sock
 ```
 
-Check to see if the object is a block device
+Check to see if an object is a block device
 
 ```yaml
 testing_block_device:
@@ -43,7 +42,7 @@ testing_block_device:
     - name: /dev/sda1
 ```
 
-Check to see if the object is a symlink
+Check to see if an object is a symlink
 
 ```yaml
 testing_symlink:
@@ -51,7 +50,7 @@ testing_symlink:
     - name: /etc/named.conf
 ```
 
-Checking to see if the object is a FIFO pipe
+Checking to see if an object is a FIFO pipe
 
 ```yaml
 testing_fifo:
@@ -107,7 +106,7 @@ testing_eth0:
     - nic: eth0
     - ip: 192.168.0.1
     - netmask: 255.255.255.0
-    - broadcast: 192.168.0.254
+    - broadcast: 192.168.0.255
 ```
 
 Check a route is present

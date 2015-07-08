@@ -24,7 +24,7 @@ def __is_type(name, _type='FILE'):
     if os.path.exists(name):
         mode = os.stat(name)
 
-        return eval('.'.join(['stat', FILE_TYPES[_type]])(mode))
+        return getattr(stat, FILE_TYPES[_type])(mode.st_mode)
 
     return False
 
