@@ -22,7 +22,7 @@ def __is_type(name, _type='FILE'):
         'SOCKET': 'S_ISSOCK'
     }
     if os.path.exists(name):
-        mode = os.stat(name)
+        mode = os.lstat(name)
 
         return getattr(stat, FILE_TYPES[_type])(mode.st_mode)
 
@@ -91,7 +91,7 @@ def is_owner(name, owner):
     Check the owner of `name`
     '''
     if os.path.exists(name):
-        uid = os.stat(name).st_uid
+        uid = os.lstat(name).st_uid
 
         if isinstance(owner, int):
             return owner == uid
@@ -106,7 +106,7 @@ def is_group(name, group):
     Check the group of `name`
     '''
     if os.path.exists(name):
-        gid = os.stat(name).st_gid
+        gid = os.lstat(name).st_gid
 
         if isinstance(group, int):
             return group == gid
