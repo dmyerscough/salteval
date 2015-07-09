@@ -46,11 +46,10 @@ def iface_present(nic, ip, netmask, broadcast):
     '''
     interfaces = psutil.net_if_addrs()
 
-    if interfaces.get(nic, None):
-        for iface in interfaces:
-            if (iface.address == ip and iface.netmask == netmask and
-               iface.broadcast == broadcast):
-                return True
+    for iface in interfaces.get(nic, []):
+        if (iface.address == ip and iface.netmask == netmask and
+           iface.broadcast == broadcast):
+            return True
 
     return False
 
