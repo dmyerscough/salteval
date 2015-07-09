@@ -4,10 +4,11 @@
 Perform functional testing to validate configuration changes
 '''
 
-import importlib
 import argparse
 import yaml
 import sys
+
+from importlib import import_module
 
 
 def parse_test(config):
@@ -38,7 +39,7 @@ def main(config):
                 (module, method) = func.split('.')
 
                 successful = getattr(
-                    importlib.import_module('salteval.{0}'.format(module), method),
+                    import_module('salteval.{0}'.format(module), method),
                     method
                 )(**kwargs)
             except AttributeError:
