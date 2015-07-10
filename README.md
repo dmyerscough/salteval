@@ -3,6 +3,8 @@
 salteval
 =========
 
+[![build status](https://magnum.travis-ci.com/dmyerscough/salteval.svg?token=dJXbRwpjXC8gnoYqRo5q&branch=master)](https://magnum.travis-ci.com/dmyerscough/salteval)
+
 Perform functional testing after your configuration management system has run.
 
 
