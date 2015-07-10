@@ -1,4 +1,7 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+Unit Testing for file module
+'''
 
 import salteval
 import unittest

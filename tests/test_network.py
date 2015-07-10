@@ -1,5 +1,7 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
+'''
+Unit testing for network module
+'''
 
 import mock
 import unittest
@@ -7,6 +9,9 @@ import salteval
 
 
 class TestNetwork(unittest.TestCase):
+    '''
+    Testing functionality of network module
+    '''
 
     @mock.patch('psutil.net_if_addrs')
     def test_interface_present(self, mock_network):
@@ -82,7 +87,6 @@ class TestNetwork(unittest.TestCase):
         '''
         Test convert big indian
         '''
-        
         self.assertEqual(
             salteval.network.convert('0101000A'), '10.0.1.1'
         )
