@@ -156,3 +156,27 @@ class TestFileFunctions(unittest.TestCase):
         self.assertFalse(
             salteval.file.is_group('/etc/passwd', 0)
         )
+
+    @mock.patch('os.path.exists', return_value=False)
+    def test_is_file(self, mock_path):
+        '''
+        Test the is_file
+        '''
+        self.assertFalse(
+            salteval.file.is_file('/etc/nonexist.conf')
+        )
+        self.assertFalse(
+            salteval.file.is_dir('/etc/nonexist.conf')
+        )
+        self.assertFalse(
+            salteval.file.is_block('/etc/nonexist.conf')
+        )
+        self.assertFalse(
+            salteval.file.is_symlink('/etc/nonexist.conf')
+        )
+        self.assertFalse(
+            salteval.file.is_fifo('/etc/nonexist.conf')
+        )
+        self.assertFalse(
+            salteval.file.is_perms('/etc/nonexist.conf', '755')
+        )
