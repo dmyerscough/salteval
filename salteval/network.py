@@ -10,7 +10,7 @@ import psutil
 from socket import AF_INET, AF_INET6, SOCK_STREAM, SOCK_DGRAM
 
 
-def __convert(val):
+def convert(val):
     '''
     Convert little indian
     '''
@@ -21,7 +21,7 @@ def is_listening(expect_port, protocol='tcp'):
     '''
     Check a port is listening on a specific interface
     '''
-    __PROTOCOL_MAP = {
+    PROTOCOL = {
         (AF_INET, SOCK_STREAM): 'tcp',
         (AF_INET, SOCK_DGRAM): 'udp',
         (AF_INET6, SOCK_STREAM): 'tcp6',
@@ -33,22 +33,20 @@ def is_listening(expect_port, protocol='tcp'):
     for port in ports:
         (interface, listening_port) = port.laddr
 
-        if (__PROTOCOL_MAP[(port.family, port.type)] == protocol and
-           expect_port == listening_port):
+        if PROTOCOL[(port.family, port.type)] == protocol and expect_port == listening_port:
             return True
 
     return False
 
 
-def iface_present(nic, ip, netmask, broadcast):
+def iface_present(nic, ip_addr, netmask, broadcast):
     '''
     Check the network interface is correctly configured
     '''
     interfaces = psutil.net_if_addrs()
 
     for iface in interfaces.get(nic, []):
-        if (iface.address == ip and iface.netmask == netmask and
-           iface.broadcast == broadcast):
+        if iface.address == ip_addr and iface.netmask == netmask and iface.broadcast == broadcast:
             return True
 
     return False
@@ -58,12 +56,14 @@ def route_present(destination, gateway, interface):
     '''
     Check a specific route is present
     '''
-    with open('/proc/net/route', 'r') as fh:
-        for i in fh.readlines()[1:]:
-            (iface, dest, gw, misc) = i.split('\t', 3)
+    with open('/proc/net/route', 'r') as route_table:
+        for i in route_table:
+            if i.startswith('Iface'):
+                continue
 
-            if (interface == iface and destination == __convert(dest) and
-               gateway == __convert(gw)):
+            (iface, dest, gway, _) = i.split('\t', 3)
+
+            if interface == iface and destination == convert(dest) and gateway == convert(gway):
                 return True
 
     return False
